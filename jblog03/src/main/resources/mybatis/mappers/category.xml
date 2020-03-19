@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+		 insert 
+		   into category 
+		 values (null, #{name }, #{description }, now(), #{id } )
+		]]>
+	</insert>
+	
+	<select id="getCategoryList" parameterType="String" resultType="categoryvo">
+		<![CDATA[
+		    select no, name
+		      from category
+		     where id = #{id }
+		  order by no desc
+		]]>
+	</select>
+	
+	<select id="getDefultcategoryNo" parameterType="String" resultType="long">
+		<![CDATA[
+		    select max(no)
+		      from category
+		     where id = #{id }
+		]]>
+	</select>
+	
+	<select id="getCategoryCountList" parameterType="String" resultType="categoryvo">
+		<![CDATA[
+		    select c.no, c.name, c.description, count(p.no) as countPost
+		      from category c
+         left join post p 
+			    on c.no = p.category_no
+		       where c.id = #{id }
+		  group by c.no
+		  order by no desc
+		]]>
+	</select>
+	
+	<select id="postCount" parameterType="long" resultType="int">
+		<![CDATA[
+		    select count(p.no) as countPost
+		      from category c
+              join post p 
+			    on c.no = p.category_no
+		     where c.no = #{no }
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+		    delete
+		      from category
+		       where no = #{no }
+		]]>
+	</delete>
+	
+	<select id="findIdandNo" parameterType="map" resultType="int">
+		<![CDATA[
+		    select count(no)
+		      from category
+		     where no = #{categoryNo }
+		       and id = #{id }
+		]]>
+	</select>
+	
+</mapper>
