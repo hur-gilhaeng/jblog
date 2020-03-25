@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+
+	<insert id="insert" parameterType="postvo">
+		<![CDATA[
+		   insert 
+		     into post 
+		   values ( null, #{title }, #{contents }, now(), #{categoryNo } )
+		]]>
+	</insert>
+	
+	<select id="getPostList" parameterType="map" resultType="postvo">
+		<![CDATA[
+		    select p.no, p.title, p.reg_date as regDate, p.category_no as categoryNo
+		      from post p 
+		      join category c on p.category_no = c.no
+		     where p.category_no = #{categoryNo }
+		       and c.id = #{id }
+		  order by no desc
+		]]>
+	</select>
+	
+	<select id="getPost" parameterType="map" resultType="postvo">
+		<![CDATA[
+		   select p.no, p.title, p.contents, p.reg_date as regDate
+		     from post p 
+		    where p.category_no = #{categoryNo }
+		      and p.no = #{postNo }
+		]]>
+	</select>
+	
+	<select id="getDefultPostNo" parameterType="long" resultType="long">
+		<![CDATA[
+		    select max(no) 
+		      from post 
+		     where category_no = #{categoryNo } 
+		]]>
+	</select>
+
+	<update id="update" parameterType="postvo">
+		<![CDATA[
+		--	update post
+		--	   set password = password(#{password })
+		--	 where id = #{id }
+		]]>
+	</update>
+</mapper>
