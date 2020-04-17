@@ -9,6 +9,9 @@
 		   into category 
 		 values (null, #{name }, #{description }, now(), #{id } )
 		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
 	
 	<select id="getCategoryList" parameterType="String" resultType="categoryvo">
@@ -30,7 +33,7 @@
 	
 	<select id="getCategoryCountList" parameterType="String" resultType="categoryvo">
 		<![CDATA[
-		    select c.no, c.name, c.description, count(p.no) as countPost
+		    select c.no, c.name, c.description, count(p.no) as countPost, c.id
 		      from category c
          left join post p 
 			    on c.no = p.category_no

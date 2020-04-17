@@ -112,9 +112,9 @@ public class BlogController {
 		}
 		BlogVo blogVo = blogService.blogInfo(id);
 		model.addAttribute("blog", blogVo);
-		
-		List<CategoryVo> cList = blogService.blogCategory(id);
-		model.addAttribute("cList", cList);
+//		
+//		List<CategoryVo> cList = blogService.blogCategory(id);
+//		model.addAttribute("cList", cList);
 		
 		return "blog/blog-admin-category";
 	}
