@@ -28,12 +28,12 @@
 var startNo = 0;
 var isEnd = false;
 
-/* var listItemTemplate = new EJS({
+var listItemTemplate = new EJS({
 	url: "${pageContext.request.contextPath }/assets/js/ejs/list-item-template.ejs"
 });
 var listTemplate = new EJS({
 	url: "${pageContext.request.contextPath }/assets/js/ejs/list-template.ejs"
-}); */
+}); 
 
 var messageBox = function(title, message, callback){
 	$("#dialog-message p").text(message);
@@ -50,7 +50,7 @@ var messageBox = function(title, message, callback){
 		});
 }
 
-var render = function(vo, mode){
+/* var render = function(vo, mode){
 	var html = 
 		"<tr data-no='" + vo.no + "'>" +
 		"	<td>" + vo.no + "</td>" +
@@ -68,8 +68,7 @@ var render = function(vo, mode){
 	 } else {
 	 	$("#admin-cat").append(html);
 	 }
-	// $("#admin-cat")[mode ? 'prepend' : 'append'](html);
-}
+} */
 
 var fetchList = function(){
 	if(isEnd){
@@ -88,15 +87,16 @@ var fetchList = function(){
 				return;
 			}
 			
+			// console.log(response);
+			// console.log('${pageContext.request.contextPath }/${id }/api/admin/category/list/');
+			
 			// redering
-			// var html = listTemplate.render(response);
+			var html = listTemplate.render(response);
+			$("#admin-cat").append(html);
 			
-			console.log(response);
-			console.log('${pageContext.request.contextPath }/${id }/api/admin/category/list/');
-			
-			$.each(response.data, function(index, vo){
+			/* $.each(response.data, function(index, vo){
 				render(vo);
-			});
+			}); */
 			
 		},
 		error: function(xhr, status, e){
@@ -106,54 +106,6 @@ var fetchList = function(){
 }
 
 $(function(){
-/* 	// 삭제 다이알로 객체 만들기
-	var dialogDelete = $("#dialog-delete-form").dialog({
-		autoOpen: false,
-		width: 300,
-		height: 220,
-		modal: true,
-		buttons: {
-			"삭제": function(){
-				var no = $("#hidden-no").val();
-				var password = $("#password-delete").val();
-				
-				$.ajax({
-					url: '${pageContext.request.contextPath }/${id }/api/admin/category/delete/'+no,
-					async: true,
-					type: 'delete',
-					dataType: 'json',
-					data: 'password=' + password,
-					success: function(response){
-						if(response.result != "success"){
-							console.error(response.message);
-							return;
-						}
-						
-						if(response.data != -1){
-							$("#list-guestbook li[data-no=" + response.data + "]").remove();
-							dialogDelete.dialog('close');
-							return;
-						}
-						
-						// 비밀번호가 틀린경우
-						$("#dialog-delete-form p.validateTips.error").show();
-					},
-					error: function(xhr, status, e){
-						console.error(status + ":" + e);
-					}
-				});
-			},
-			"취소": function(){
-				$(this).dialog('close');
-			}
-		},
-		close: function(){
-			$("#hidden-no").val("");
-			$("#password-delete").val("");
-			$("#dialog-delete-form p.validateTips.error").hide();
-		}
-	});
-	 */
 	
 	// 입력폼 submit 이벤트
 	$('#admin-cat-add-form').submit(function(event){
@@ -189,9 +141,9 @@ $(function(){
 					return;
 				}
 				
-				render(response.data, true);
-				// var html = listItemTemplate.render(response.data);
-				// $("#admin-cat").prepend(html);
+				// render(response.data, true);
+				var html = listItemTemplate.render(response.data);
+				$("#admin-cat-tr-th").after(html);
 				
 				// form reset
 				$("#admin-cat-add-form")[0].reset();
