@@ -112,40 +112,40 @@ public class BlogController {
 		}
 		BlogVo blogVo = blogService.blogInfo(id);
 		model.addAttribute("blog", blogVo);
-//		
+		
 //		List<CategoryVo> cList = blogService.blogCategory(id);
 //		model.addAttribute("cList", cList);
 		
 		return "blog/blog-admin-category";
 	}
 	
-	@RequestMapping( value = "/admin/category", method = RequestMethod.POST )
-	public String adminCategoryInsert( 
-			@PathVariable String id, 
-			CategoryVo categoryVo) {
-		
-		//System.out.println(categoryVo);
-		blogService.insertCategoryVo(categoryVo);
-		
-		return "redirect:/"+id+"/admin/category";
-	}
-	
-	@RequestMapping("/admin/delete/{no}")
-	public String adminCategoryDelete(
-			@PathVariable String id,
-			@AuthUser UserVo authUser,
-			@PathVariable("no") Long no) {
-		
-		if(authUser==null) {
-			return "redirect:/"+id;
-		} else if(!id.equals(authUser.getId())) {
-			return "redirect:/"+id;
-		}
-		
-		blogService.deleteCategoryVo(no);
-		
-		return "redirect:/"+id+"/admin/category";
-	}
+//	@RequestMapping( value = "/admin/category", method = RequestMethod.POST )
+//	public String adminCategoryInsert( 
+//			@PathVariable String id, 
+//			CategoryVo categoryVo) {
+//		
+//		//System.out.println(categoryVo);
+//		blogService.insertCategoryVo(categoryVo);
+//		
+//		return "redirect:/"+id+"/admin/category";
+//	}
+//	
+//	@RequestMapping("/admin/delete/{no}")
+//	public String adminCategoryDelete(
+//			@PathVariable String id,
+//			@AuthUser UserVo authUser,
+//			@PathVariable("no") Long no) {
+//		
+//		if(authUser==null) {
+//			return "redirect:/"+id;
+//		} else if(!id.equals(authUser.getId())) {
+//			return "redirect:/"+id;
+//		}
+//		
+//		blogService.deleteCategoryVo(no);
+//		
+//		return "redirect:/"+id+"/admin/category";
+//	}
 	
 	@RequestMapping( value = "/admin/write", method = RequestMethod.GET )
 	public String adminWrite(

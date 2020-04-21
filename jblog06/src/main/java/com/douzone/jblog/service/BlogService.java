@@ -152,7 +152,7 @@ public class BlogService {
 
 	public Boolean deleteCategoryVo(Long no) {
 		if(0==categoryRepository.postCount(no)) {
-			return 0==categoryRepository.delete(no);
+			return 0!=categoryRepository.delete(no);
 		}
 		return false;
 	}

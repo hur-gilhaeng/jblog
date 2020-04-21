@@ -1,0 +1,28 @@
+<%
+	for(var i = 0; i < data.length; i++) {
+		var vo = data[i]; 
+%>
+	<tr data-no='<%=vo.no%>'>
+		<td><%=vo.no%></td>
+		<td><%=vo.name%></td>
+		<td><%=vo.countPost%></td>
+		<td><%=vo.description%></td>
+		<td>
+			<a 
+				<%
+				 if(vo.countPost==0){ 
+				%>
+					class='on'
+				<%
+				 } 
+				%>
+			href="" data-no='<%=vo.no%>' data-id='<%=vo.id%>'></a>
+		</td>
+	</tr>
+<%
+	}
+%> 
+
+
+
+
